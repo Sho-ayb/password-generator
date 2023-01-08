@@ -211,7 +211,7 @@ function getPasswordOptions() {
     )
   );
 
-  // lets check if the user has confirmed a number for password length
+  // lets check if the user has confirmed a number for password length, if not we should invoke the window.prompt() method again.
 
   if (
     passwordLength > 128 ||
@@ -290,7 +290,11 @@ function generatePassword() {
   do {
     counter++;
     console.log("counting " + counter);
+
+    generatedPassArr.push(counter);
   } while (counter < passwordLength);
+
+  console.log(generatedPassArr);
 }
 
 // Get references to the #generate element

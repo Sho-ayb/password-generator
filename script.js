@@ -92,9 +92,9 @@ returns a string of the password.
 - the generatePassword function: should first invoke the getPasswordOptions function which returns an object users options - once this function has completed execution the generatePassword function should 
 get access to this password options object and generate a string to return.
 
-  - we can pass getPasswordOptions function as an argument to this function and assign the argument to a variable named optObj - this variable becomes an anonymous function where we are able to access the objects properties using dot notation from within generatePassword function.
+  - we can assign getPasswordOptions to a variable "optSelected" - this variable becomes an anonymous function where we are able to access the objects properties using dot notation from within generatePassword function.
 
-  - once the "optObj" object is accessible,  we need to conditionally accept each users choice that involves: lowercase, numbers, specials and uppercase object properties and invoke the getRandom(arr) function and return each result to an array variable "generatedPassArr". These conditionals will need to wrapped inside of a loop. 
+  - once the "optObj" object is accessible:  assigned to a variable "optSelected",  we need to conditionally accept each users choice that involves: lowercase, numbers, specials and uppercase object properties and invoke the getRandom(arr) function and return each result to an array variable "generatedPassArr". These conditionals will need to wrapped inside of a loop. 
 
   - in order to only return a length of a password the user has inputed, we will use "passwordLength" variable as the length of  a loop - either a for loop or while loop, we can invoke the getRandom(arr) function to return a char from the array being passed to it. At each iteration of the loop the getRandom(arr) function will return a single character which is pushed to an array variable "generatedPassArr".  
 
@@ -204,7 +204,7 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-  const passwordLength = Number.parseInt(
+  let passwordLength = Number.parseInt(
     window.prompt(
       "Please enter a length of the password between 0 - 128 minimum length is 8",
       8
@@ -213,8 +213,18 @@ function getPasswordOptions() {
 
   // lets check if the user has confirmed a number for password length
 
-  if (passwordLength > 128 || Number.isNaN(passwordLength)) {
+  if (
+    passwordLength > 128 ||
+    passwordLength < 8 ||
+    Number.isNaN(passwordLength)
+  ) {
     alert("Please enter a number between 0 - 128");
+    passwordLength = Number.parseInt(
+      window.prompt(
+        "Please enter a length of the password between 0 - 128 minimum length is 8",
+        8
+      )
+    );
   }
 
   const uppercase = window.confirm(
@@ -250,6 +260,8 @@ function getPasswordOptions() {
   };
 
   console.log(optObj);
+
+  return optObj;
 }
 
 // Function for getting a random element from an array
@@ -257,7 +269,28 @@ function getRandom(arr) {}
 
 // Function to generate password with user input
 function generatePassword() {
-  getPasswordOptions();
+  // lets get access to the users options
+
+  const optSelected = getPasswordOptions();
+
+  // lets create an empty array to store all the characters returned from the loop
+
+  let generatedPassArr = [];
+
+  // now that we have the passwordLength we should use this property as the length of a loop
+
+  // first need to pass this object property to a variable
+
+  const passwordLength = optSelected.passwordLength;
+
+  console.log(passwordLength);
+
+  let counter = 0;
+
+  do {
+    counter++;
+    console.log("counting " + counter);
+  } while (counter < passwordLength);
 }
 
 // Get references to the #generate element

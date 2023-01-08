@@ -89,32 +89,24 @@ Psuedocode
 writePassword() function - this function invokes generatePassword function to a variable password - becomming the anonymous function that 
 returns a string of the password. 
 
-- the generatePassword function: should first invoke the getPasswordOptions function which returns an object of arrays of users options - once this function has completed execution the generatePassword function should 
+- the generatePassword function: should first invoke the getPasswordOptions function which returns an object users options - once this function has completed execution the generatePassword function should 
 get access to this password options object and generate a string to return.
 
-  - we can pass getPasswordOptions function as an argument to this function and assign the argument to a variable named optObj - this variable becomes an anonymous function where we are able to access the objects properties using dot notation.
+  - we can pass getPasswordOptions function as an argument to this function and assign the argument to a variable named optObj - this variable becomes an anonymous function where we are able to access the objects properties using dot notation from within generatePassword function.
 
-  - once we can get access to the optObj properties we need to generate an array of these chars in to single array by joining each array together and then shuffle the entire array using a sorting method.
+  - once the "optObj" object is accessible,  we need to conditionally accept each users choice that involves: lowercase, numbers, specials and uppercase object properties and invoke the getRandom(arr) function and return each result to an array variable "generatedPassArr". These conditionals will need to wrapped inside of a loop. 
 
-  - finally we should take this shuffled array and return it as a single string of characters to the function itself. 
+  - in order to only return a length of a password the user has inputed, we will use "passwordLength" variable as the length of  a loop - either a for loop or while loop, we can invoke the getRandom(arr) function to return a char from the array being passed to it. At each iteration of the loop the getRandom(arr) function will return a single character which is pushed to an array variable "generatedPassArr".  
+
+   - we need to shuffle up the array "generatedPassArr" using a sorting method and return a single string of characters to the function itself. 
 
 
 - the getPasswordOptions function: should do validation on all the users password options choices including: length of the password, upper/lower case, whether the user chose numbers and special chars. 
 
-  - if the user has chosen a certain length of password then the array 
-  should only allow for the specific number of chars in password. 
+   - this function should prompt the user to specify the password length between 0 - 128 and return it to a variable named "passwordLength" converted to a Number using Number.parseInt(). We need to check whether the user has entered a number between 0 - 128 - the default is 8 or whether the user has clicked on cancel button which returns NaN, to check this we can use Number.isNaN() method. If the user has clicked on cancel then alert message should be thrown to advise the user to enter a password length. 
 
-  - if the user has chosen upper and lower case chars then this function should invoke the getRandom(arr) function passing in either lowercasedCharacters array or the uppercasedCharacters array or both if the user has chosen to have lowercase and uppercase chars. 
-  
-  - if the user has chosen number then this function should invoke the getRandom(arr) function passing in numericCharacters array and if the user has chosen special chars then pass in specialCharacters array. 
+   - this function should use window.confirm() method to request the user to confirm the following options: if the user wants lowercase, uppercase, numbers and special characters in the generated password. These options should be stored within an options object within the function. 
 
-Once all prompts have been completed and user choices confirmed, this function should store these options and the randomised number of chars for each chosen option as properties of an options object. 
-
-In order to ascertain the length of the password, this function will prompt the user to input an integer number between 0 - 128 - we will need to use parseInt to convert the string returned from the prompt to an number.
-
-  - this function should validate if the user has inputted a correct number for password length.
-
-  - in order to only return a length of a password the user has inputed, we will pass the validated number to a variable and then using this number as the length of  a loop - either for loop or while loop we can invoke the getRandom(arr) function to return a char from the array being passed to it. At each iteration of the loop the randomised function will return a single char we need to push to an array stored as a property of an options object. 
 
 - getRandom(arr) function: this function is responsible for randomising and returning a single character from the array passed to it as an argument. Each invocation to this function will return - if the user has confirmed via prompts in the getPasswordOptions function: a single uppercase char, a lowercase char, a numeric char and a special char. 
 
@@ -211,13 +203,62 @@ var upperCasedCharacters = [
 ];
 
 // Function to prompt user for password options
-function getPasswordOptions() {}
+function getPasswordOptions() {
+  const passwordLength = Number.parseInt(
+    window.prompt(
+      "Please enter a length of the password between 0 - 128 minimum length is 8",
+      8
+    )
+  );
+
+  // lets check if the user has confirmed a number for password length
+
+  if (passwordLength > 128 || Number.isNaN(passwordLength)) {
+    alert("Please enter a number between 0 - 128");
+  }
+
+  const uppercase = window.confirm(
+    "Do you want your generated password to contain uppercase letters ?"
+  );
+
+  const lowercase = window.confirm(
+    "Do you want your generated password to contain lowercase letters ?"
+  );
+
+  const numbers = window.confirm(
+    "Do you want your generated password to contain numbers ?"
+  );
+
+  const specialCharacters = window.confirm(
+    "Do you want your generated password to contain special characters ?"
+  );
+
+  console.log(passwordLength);
+  console.log(uppercase);
+  console.log(lowercase);
+  console.log(numbers);
+  console.log(specialCharacters);
+
+  // lets assign all the users choices to a options object
+
+  const optObj = {
+    lowercase: lowercase,
+    numbers: numbers,
+    passwordLength: passwordLength,
+    specials: specialCharacters,
+    uppercase: uppercase,
+  };
+
+  console.log(optObj);
+}
 
 // Function for getting a random element from an array
 function getRandom(arr) {}
 
 // Function to generate password with user input
-function generatePassword() {}
+function generatePassword() {
+  getPasswordOptions();
+}
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");

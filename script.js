@@ -202,9 +202,11 @@ var upperCasedCharacters = [
   "Z",
 ];
 
+let passwordLength = 0; // initialising a global variable
+
 // Function to prompt user for password options
 function getPasswordOptions() {
-  let passwordLength = Number.parseInt(
+  passwordLength = Number.parseInt(
     window.prompt(
       "Please enter a length of the password between 0 - 128 minimum length is 8",
       8
@@ -254,21 +256,27 @@ function getPasswordOptions() {
   const OptObj = {
     lowercase: lowercase,
     numbers: numbers,
-    passwordLength: passwordLength,
     specials: specialCharacters,
     uppercase: uppercase,
   };
 
-  console.log(OptObj);
+  // lets use the Array.prototype.every method to check if all properties in the above object are false and return a boolean value
+
+  const allObjPropsFalse = Object.values(OptObj).every((val) => {
+    if (val === false) return true;
+  });
+
+  // now we have the boolean value, we can use it for a conditional to alert a message to the user
+
+  if (allObjPropsFalse)
+    alert("Please select atleast one option to generate a password !");
 
   return OptObj;
 }
 
-// Function for getting a random element from an array
-function getRandom(arr) {
-  const randomIndex = Math.floor(Math.random(arr) * arr.length);
-
-  const randomStr = arr[randomIndex];
+// Function for getting a random char from a string
+function getRandomChar(str) {
+  const randomStr = str.charAt(Math.floor(Math.random() * str.length));
 
   return randomStr;
 }
@@ -308,11 +316,31 @@ function generatePassword() {
 
   // first need to pass this object property to a variable
 
-  const passwordLength = OptSelected.passwordLength;
+  // const passwordLength = OptSelected.passwordLength;
 
-  console.log(passwordLength); // expect integer of password length
+  // console.log(passwordLength); // expect integer of password length
 
-  console.log(getRandom(specialCharacters)); // expect a single char returned
+  // we need a variable to hold all the chars
+
+  let generatePass = "";
+
+  // lets assign a random char to the above variable so that we ensure that the password will contain atleast one of each chosen option
+
+  generatePass += getRandomChar(AllowedChars.lowers); // if not empty will contain atleast one lower
+
+  generatePass += getRandomChar(AllowedChars.lowers); // if not empty will contain alteast one upper
+
+  generatePass += getRandomChar(AllowedChars.numbers); // if not empty will contain atleast one number
+
+  generatePass += getRandomChar(AllowedChars.specials); // if not empty will contain atleast one special
+
+  // in the above sequence: it only returns 4 chars to fill in the rest of the password to match the password length the user has entered: using a for loop to assign more characters: current length of the generatePass == 4.
+
+  for (let index = generatePass.length; index < passwordLength; index++) {
+    generatePass += getRandomChar(Object.values(AllowedChars).join(""));
+  }
+
+  return generatePass;
 }
 
 // Get references to the #generate element

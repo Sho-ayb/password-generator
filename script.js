@@ -251,7 +251,7 @@ function getPasswordOptions() {
 
   // lets assign all the users choices to a options object
 
-  const optObj = {
+  const OptObj = {
     lowercase: lowercase,
     numbers: numbers,
     passwordLength: passwordLength,
@@ -259,9 +259,9 @@ function getPasswordOptions() {
     uppercase: uppercase,
   };
 
-  console.log(optObj);
+  console.log(OptObj);
 
-  return optObj;
+  return OptObj;
 }
 
 // Function for getting a random element from an array
@@ -277,23 +277,42 @@ function getRandom(arr) {
 function generatePassword() {
   // lets get access to the users options
 
-  const optSelected = getPasswordOptions();
+  const OptSelected = getPasswordOptions();
 
-  // lets create an empty array to store all the characters returned from the loop
+  // lets create an empty object here to store all the users options as strings
 
-  let generatedPassArr = [];
+  const AllowedChars = {
+    lowers: "",
+    uppers: "",
+    numbers: "",
+    specials: "",
+  };
+
+  // lets determine which chars are chosen and pass each result to the above object as strings
+
+  if (OptSelected.lowercase)
+    AllowedChars.lowers = [...lowerCasedCharacters].join("");
+
+  if (OptSelected.uppercase)
+    AllowedChars.uppers = [...upperCasedCharacters].join("");
+
+  if (OptSelected.numbers)
+    AllowedChars.numbers = [...numericCharacters].join("");
+
+  if (OptSelected.specials)
+    AllowedChars.specials = [...specialCharacters].join("");
+
+  console.log(AllowedChars);
 
   // now that we have the passwordLength we should use this property as the length of a loop
 
   // first need to pass this object property to a variable
 
-  const passwordLength = optSelected.passwordLength;
+  const passwordLength = OptSelected.passwordLength;
 
   console.log(passwordLength); // expect integer of password length
 
   console.log(getRandom(specialCharacters)); // expect a single char returned
-
-  console.log(generatedPassArr); // expect empty array
 }
 
 // Get references to the #generate element

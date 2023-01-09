@@ -265,7 +265,13 @@ function getPasswordOptions() {
 }
 
 // Function for getting a random element from an array
-function getRandom(arr) {}
+function getRandom(arr) {
+  const randomIndex = Math.floor(Math.random(arr) * arr.length);
+
+  const randomStr = arr[randomIndex];
+
+  return randomStr;
+}
 
 // Function to generate password with user input
 function generatePassword() {
@@ -283,18 +289,11 @@ function generatePassword() {
 
   const passwordLength = optSelected.passwordLength;
 
-  console.log(passwordLength);
+  console.log(passwordLength); // expect integer of password length
 
-  let counter = 0;
+  console.log(getRandom(specialCharacters)); // expect a single char returned
 
-  do {
-    counter++;
-    console.log("counting " + counter);
-
-    generatedPassArr.push(counter);
-  } while (counter < passwordLength);
-
-  console.log(generatedPassArr);
+  console.log(generatedPassArr); // expect empty array
 }
 
 // Get references to the #generate element

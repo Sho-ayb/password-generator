@@ -202,7 +202,7 @@ var upperCasedCharacters = [
   "Z",
 ];
 
-let passwordLength = 0; // initialising a global variable
+let passwordLength;
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -328,7 +328,7 @@ function generatePassword() {
 
   generatePass += getRandomChar(AllowedChars.lowers); // if not empty will contain atleast one lower
 
-  generatePass += getRandomChar(AllowedChars.lowers); // if not empty will contain alteast one upper
+  generatePass += getRandomChar(AllowedChars.uppers); // if not empty will contain alteast one upper
 
   generatePass += getRandomChar(AllowedChars.numbers); // if not empty will contain atleast one number
 

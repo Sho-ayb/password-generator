@@ -296,33 +296,17 @@ function generatePassword() {
 
   // lets determine which chars are chosen and pass each result to the above object as strings
 
-  // if (OptSelected.lowercase)
-  //   AllowedChars.lowers = [...lowerCasedCharacters].join("");
+  if (OptSelected.lowercase)
+    AllowedChars.lowers = [...lowerCasedCharacters].join("");
 
-  // if (OptSelected.uppercase)
-  //   AllowedChars.uppers = [...upperCasedCharacters].join("");
+  if (OptSelected.uppercase)
+    AllowedChars.uppers = [...upperCasedCharacters].join("");
 
-  // if (OptSelected.numbers)
-  //   AllowedChars.numbers = [...numericCharacters].join("");
+  if (OptSelected.numbers)
+    AllowedChars.numbers = [...numericCharacters].join("");
 
-  // if (OptSelected.specials)
-  //   AllowedChars.specials = [...specialCharacters].join("");
-
-  const optVals = Object.values(OptSelected);
-
-  optVals.every((val) => {
-    if (val === true) {
-      console.log(val);
-
-      // let { lower, upper, number, special } = AllowedChars;
-
-      // for (let index = 0; index < Object.keys(AllowedChars).length; index++) {
-      //   console.log((lower = [...lowerCasedCharacters].join("")));
-      // }
-
-      AllowedChars.forEach((key) => {});
-    }
-  });
+  if (OptSelected.specials)
+    AllowedChars.specials = [...specialCharacters].join("");
 
   console.log(AllowedChars);
 

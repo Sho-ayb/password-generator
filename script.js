@@ -202,16 +202,36 @@ var upperCasedCharacters = [
   "Z",
 ];
 
+// helper functions
+
+// Function for getting a random char from a string
+function getRandomChar(str) {
+  const randomStr = str.charAt(Math.floor(Math.random() * str.length));
+
+  return randomStr;
+}
+
+// lets create a user confirmation function here
+
+function userConfirm(optionChoice) {
+  return window.confirm(
+    `Click OK if you would like your generated password to contain ${optionChoice} characters`
+  );
+}
+
 let passwordLength;
 
 // Function to prompt user for password options
-function getPasswordOptions() {
+function getPasswordOptions(length = 10) {
   // to get the correct input for password length from the user, we need to use a loop to keep asking the user to enter the correct input.
 
   // lets first create a variable that returns the users input when this function is executed
 
   passwordLength = Number.parseInt(
-    window.prompt("Please enter a length of password between 10 and 64")
+    window.prompt(
+      "Please enter a length of password between 10 and 64",
+      `${length}`
+    )
   );
 
   while (
@@ -220,25 +240,20 @@ function getPasswordOptions() {
     passwordLength > 64
   ) {
     passwordLength = Number.parseInt(
-      window.prompt("Please enter a length of password between 10 and 64")
+      window.prompt(
+        "Please enter a length of password between 10 and 64",
+        `${length}`
+      )
     );
   }
 
-  const uppercase = window.confirm(
-    "Do you want your generated password to contain uppercase letters ?"
-  );
+  const uppercase = userConfirm("uppercase");
 
-  const lowercase = window.confirm(
-    "Do you want your generated password to contain lowercase letters ?"
-  );
+  const lowercase = userConfirm("lowercase");
 
-  const numbers = window.confirm(
-    "Do you want your generated password to contain numbers ?"
-  );
+  const numbers = userConfirm("numbers");
 
-  const specialCharacters = window.confirm(
-    "Do you want your generated password to contain special characters ?"
-  );
+  const specialCharacters = userConfirm("special");
 
   // lets assign all the users choices to a options object
 
@@ -263,14 +278,8 @@ function getPasswordOptions() {
   return OptObj;
 }
 
-// Function for getting a random char from a string
-function getRandomChar(str) {
-  const randomStr = str.charAt(Math.floor(Math.random() * str.length));
-
-  return randomStr;
-}
-
 // Function to generate password with user input
+
 function generatePassword() {
   // lets get access to the users options
 
@@ -301,29 +310,19 @@ function generatePassword() {
 
   console.log(AllowedChars);
 
-  // now that we have the passwordLength we should use this property as the length of a loop
-
-  // first need to pass this object property to a variable
-
-  // const passwordLength = OptSelected.passwordLength;
-
-  // console.log(passwordLength); // expect integer of password length
-
   // we need a variable to hold all the chars
 
   let generatePass = "";
 
-  // lets assign a random char to the above variable so that we ensure that the password will contain atleast one of each chosen option
+  // refactoring the code to loop through the object and pass the property value of the object to getRandomChar function
 
-  generatePass += getRandomChar(AllowedChars.lowers); // if not empty will contain atleast one lower
+  const objKeys = Object.keys(AllowedChars);
 
-  generatePass += getRandomChar(AllowedChars.uppers); // if not empty will contain alteast one upper
+  objKeys.forEach((key) => {
+    generatePass += getRandomChar(AllowedChars[key]);
+  });
 
-  generatePass += getRandomChar(AllowedChars.numbers); // if not empty will contain atleast one number
-
-  generatePass += getRandomChar(AllowedChars.specials); // if not empty will contain atleast one special
-
-  // in the above sequence: it only returns 4 chars to fill in the rest of the password to match the password length the user has entered: using a for loop to assign more characters: current length of the generatePass == 4.
+  // in the above sequence: it only returns 4 unique chars: so to fill in the rest of the password to match the password length: use a for loop to assign more characters
 
   for (let index = generatePass.length; index < passwordLength; index++) {
     generatePass += getRandomChar(Object.values(AllowedChars).join(""));

@@ -29,6 +29,6 @@ based off the users choices selected and display this generated password on the 
 
 The application should look like so: 
 
-[Generated Password Screenshot](./passwordGeneratorCapture.JPG)
+![Generated Password Screenshot](./passwordGeneratorCapture.JPG)
 
 

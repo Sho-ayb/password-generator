@@ -31,4 +31,7 @@ The application should look like so:
 
 ![Generated Password Screenshot](./passwordGeneratorCapture.JPG)
 
+Link to live application
+---
 
+[Password Generator Application](https://sho-ayb.github.io/trilogy-bootcamp-password-generator/)

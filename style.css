@@ -134,4 +134,8 @@ button[disabled] {
   .btn {
     font-size: 0.8rem;
   }
+
+  div .card-header h2 {
+    text-align: center;
+  }
 }

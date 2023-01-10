@@ -206,26 +206,21 @@ let passwordLength;
 
 // Function to prompt user for password options
 function getPasswordOptions() {
+  // to get the correct input for password length from the user, we need to use a loop to keep asking the user to enter the correct input.
+
+  // lets first create a variable that returns the users input when this function is executed
+
   passwordLength = Number.parseInt(
-    window.prompt(
-      "Please enter a length of the password between 0 - 128 minimum length is 8",
-      8
-    )
+    window.prompt("Please enter a length of password between 10 and 64")
   );
 
-  // lets check if the user has confirmed a number for password length, if not we should invoke the window.prompt() method again.
-
-  if (
-    passwordLength > 128 ||
-    passwordLength < 8 ||
-    Number.isNaN(passwordLength)
+  while (
+    Number.isNaN(passwordLength) ||
+    passwordLength < 10 ||
+    passwordLength > 64
   ) {
-    alert("Please enter a number between 0 - 128");
     passwordLength = Number.parseInt(
-      window.prompt(
-        "Please enter a length of the password between 0 - 128 minimum length is 8",
-        8
-      )
+      window.prompt("Please enter a length of password between 10 and 64")
     );
   }
 
@@ -244,12 +239,6 @@ function getPasswordOptions() {
   const specialCharacters = window.confirm(
     "Do you want your generated password to contain special characters ?"
   );
-
-  console.log(passwordLength);
-  console.log(uppercase);
-  console.log(lowercase);
-  console.log(numbers);
-  console.log(specialCharacters);
 
   // lets assign all the users choices to a options object
 

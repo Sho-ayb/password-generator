@@ -1,4 +1,4 @@
-# trilogy-bootcamp-password-generator
+# password-generator
 
 Introduction
 ---
